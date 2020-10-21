@@ -24,7 +24,7 @@
 <body class="mappage">
 <div id="header">
 <h1>Destination Signs</h1>
-<p><strong>This tool shows the content of relations with "type=destination_sign", "direction_*" tags on 
+<p><strong>This tool shows the content of relations with "type=destination_sign", "direction_*" tags on
 guideposts as well as "destination" tags on highways and guideposts.</strong>
 <br>Please enter an Id of an intersection node or a guidepost - or do it the simple way and select a marker from the map.
 
@@ -63,7 +63,7 @@ guideposts as well as "destination" tags on highways and guideposts.</strong>
       <option value="275664964">275664964 - with various from's
       <option value="4554236964">4554236964 - with many from; time and distance
     </select></label>
-    Country <select name="country" onChange="updatelink()"><option value="DE">Germany<option value="AT">Austria<option value="IT">Italy<option value="PT">Portugal</select><br> 
+    Country <select name="country" onChange="updatelink()"><option value="DE">Germany<option value="AT">Austria<option value="IT">Italy<option value="PT">Portugal</select><br>
 
     <input type="checkbox" name="namedroutes" checked="checked" onChange="updatelink()"> Add names of routes</input>
     <br><input type="checkbox" name="fromarrow" checked="checked" onChange="updatelink()"> Show hollow arrows as seen from sign</input>
@@ -142,7 +142,7 @@ for(i=0; i<hash.length; i++ ){
     if ( t[1]==0 ) include_way = false;
     }
   }
-  
+
 document.getElementsByName('namedroutes')[0].checked = namedroutes;
 document.getElementsByName('fromarrow')[0].checked = fromarrow;
 document.getElementsByName('include_sgn')[0].checked = include_sgn;
@@ -150,25 +150,25 @@ document.getElementsByName('include_way')[0].checked = include_way;
 document.getElementsByName('country')[0].value = country;
 
 
-if(node) {     getsign(node); } 
-if(way)  {     getsignway(way); } 
+if(node) {     getsign(node); }
+if(way)  {     getsignway(way); }
 
- 
+
 var waylayer; var signlayer;
-if (document.getElementsByName("include_sgn")[0].checked)  
+if (document.getElementsByName("include_sgn")[0].checked)
   addsigns();
-  
-if (document.getElementsByName("include_way")[0].checked)  
+
+if (document.getElementsByName("include_way")[0].checked)
   addways();
-     
-    
+
+
 function togglesigns() {
   if (document.getElementsByName("include_sgn")[0].checked == 0)
     map.removeLayer(signlayer);
   else
     addsigns();
   }
-    
+
 function toggleways() {
   if (document.getElementsByName("include_way")[0].checked == 0)
     map.removeLayer(waylayer);
@@ -177,7 +177,7 @@ function toggleways() {
   }
 
 function addsigns() {
-  signlayer = L.layerGroup();  
+  signlayer = L.layerGroup();
   map.addLayer(signlayer);
 L.layerJSON({
   url: endpoint+'?data=\
@@ -207,7 +207,7 @@ node[information=guidepost][destination]({lat1},{lon1},{lat2},{lon2})->.f;\
   attribution: "POI data from overpass API under ODbL",
   updateOutBounds: false,
   buildIcon: function(data, title) {
-    if(data.tags && 
+    if(data.tags &&
        Object.keys(data.tags).some(function(k){ return ~k.indexOf("direction_") })
        ) {
       return new L.Icon({
@@ -217,8 +217,8 @@ node[information=guidepost][destination]({lat1},{lon1},{lat2},{lon2})->.f;\
         popupAnchor: new L.Point(0, -41)
         })
       }
-    else if(data.tags && 
-            data.tags.hasOwnProperty("destination") && 
+    else if(data.tags &&
+            data.tags.hasOwnProperty("destination") &&
             data.tags.hasOwnProperty("information")) {
       return new L.Icon({
         iconUrl:'../code/marker-icon3.png',
@@ -226,7 +226,7 @@ node[information=guidepost][destination]({lat1},{lon1},{lat2},{lon2})->.f;\
         iconAnchor: new L.Point(12, 41),
         popupAnchor: new L.Point(0, -41)
         })
-      }  
+      }
     else {
       return new L.Icon({
         iconUrl:'../code/marker-icon.png',
@@ -248,14 +248,14 @@ node[information=guidepost][destination]({lat1},{lon1},{lat2},{lon2})->.f;\
     return o;
     }
   })
-  .addTo(signlayer);  
-  
+  .addTo(signlayer);
+
   }
-  
+
 function addways() {
-  waylayer = L.layerGroup();  
+  waylayer = L.layerGroup();
   map.addLayer(waylayer);
-  
+
   L.layerJSON({
     url: endpoint+'?data=\
     [out:json];\
@@ -270,7 +270,7 @@ function addways() {
     attribution: "POI data from overpass API under ODbL",
     updateOutBounds: false,
     buildIcon: function(data, title) {
-      if(data.tags && 
+      if(data.tags &&
        (Object.keys(data.tags).some(function(k){ return ~k.indexOf(":lanes")}) ||
        Object.keys(data.tags).some(function(k){ return ~k.indexOf("turn")}))
        ) {
@@ -279,9 +279,9 @@ function addways() {
           iconSize: new L.Point(25, 41),
           iconAnchor: new L.Point(12, 41),
           popupAnchor: new L.Point(0, -41)
-          })       
+          })
         }
-      else { 
+      else {
         return new L.Icon({
           iconUrl:'../code/marker-icon5.png',
           iconSize: new L.Point(25, 41),
@@ -303,9 +303,9 @@ function addways() {
       }
     })
 
-    .addTo(waylayer);  
+    .addTo(waylayer);
   }
-  
+
 function getsignway(way) {
   var url = endpoint;
   var data = "data=[out:json];way("+way+");out center;";
@@ -322,8 +322,8 @@ function getwaymove(e) {
   catch {};
   }
 
-  
-  
+
+
 </script>
 
 </html>
