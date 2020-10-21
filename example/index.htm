@@ -108,7 +108,7 @@ map.on('zoomend moveend', function() {
 	var lat = map.getCenter().lat.toFixed(4);
 	var lng = map.getCenter().lng.toFixed(4);
 	var zoom = map.getZoom();
-	window.location.hash = `map=${lat}/${lng}/${zoom}`;
+	location.replace(`#map=${lat}/${lng}/${zoom}`);
 });
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
