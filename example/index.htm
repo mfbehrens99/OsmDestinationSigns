@@ -97,6 +97,20 @@ var endpoint = "https://osm.mueschelsoft.de/overpass/";
 var currentType = 'node';
 var map = L.map('map').setView([46.72539, 11.42286], 14);
 
+//Move map back to the position where it was in the last session
+var hash = window.location.hash.substr(5).split("/");
+	if (hash.length == 3) {
+		map.setView(L.latLng(parseFloat(hash[0]),parseFloat(hash[1])),parseFloat(hash[2]));
+	}
+
+// Constantly update hash value
+map.on('zoomend moveend', function() {
+	var lat = map.getCenter().lat.toFixed(4);
+	var lng = map.getCenter().lng.toFixed(4);
+	var zoom = map.getZoom();
+	window.location.hash = `map=${lat}/${lng}/${zoom}`;
+});
+
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   { attribution: 'Map &copy; <a href="https://www.openstreetmap.org">OpenStreetMap</a>' }).addTo(map);
 
